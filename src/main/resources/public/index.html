@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+	<script src="js/vue.min.js"></script>
+	
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<h1 class="mui-title">追号记录</h1>
+	</header>
+	<div class="mui-content" id="recordList">
+		<ul class="mui-table-view">
+			<template v-for="myRecord in myRecords">
+			<li class="mui-table-view-cell mui-collapse">
+				<a class="mui-navigate-right" href="#">{{myRecord.code}}
+					<template v-if="myRecord.status==0">
+					<span class="mui-badge">{{myRecord.statusStr}}</span>
+					</template>
+					<template v-else-if="myRecord.status==1">
+					<span class="mui-badge mui-badge-warning">{{myRecord.statusStr}}</span>
+					</template>
+					<template v-else-if="myRecord.status==2">
+					<span class="mui-badge mui-badge-success">{{myRecord.statusStr}}</span>
+					</template>
+					<template v-else-if="myRecord.status==3">
+					<span class="mui-badge mui-badge-danger">{{myRecord.statusStr}}</span>
+					</template>
+				</a>
+				<div class="mui-collapse-content">
+					<p>位数:{{myRecord.wstr}} | 类型:{{myRecord.type}} | 购买次数:{{myRecord.buynum}}</p>
+					<template v-for="record in myRecord.records">
+							<template v-if="myRecord.status==0">
+								<p class="mui-badge">期数:{{record.code}} | 购买号码:{{record.buyNumber}} | 金额:{{record.buyMoney}}元 | 赢取金额:{{record.winMoney}}</p>
+							</template>	
+							<template v-else-if="myRecord.status==2">
+								<p class="mui-badge mui-badge-success">期数:{{record.code}} | 购买号码:{{record.buyNumber}} | 金额:{{record.buyMoney}}元 | 赢取金额:{{record.winMoney}}</p>
+							</template>		
+							<template v-else-if="record.status==2">
+								<p class="mui-badge mui-badge-danger">期数:{{record.code}} | 购买号码:{{record.buyNumber}} | 金额:{{record.buyMoney}}元 | 赢取金额:{{record.winMoney}}</p>
+							</template>
+					</template>
+				</div>
+			</li>
+			</template>
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		mui.init();
+		var vm = new Vue({
+			el: '#recordList',
+			data: {
+				myRecords: []
+			}
+		});
+		mui.ajax('cp/zhrecord/myRecords',{
+			data:{
+			},
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			success:function(data){
+				vm.myRecords = data.list;
+			},
+			error:function(xhr,type,errorThrown){
+				
+			}
+		});
+	</script>
+</body>
+</html>

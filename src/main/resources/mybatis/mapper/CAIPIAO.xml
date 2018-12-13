@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atao.caipiao.mapper.CaipiaoMapper">
+    <resultMap id="BaseResultMap" type="Caipiao">
+    <id property="code" column="code" jdbcType="INTEGER" />
+
+    <result property="wan" column="wan" jdbcType="INTEGER" />
+    <result property="qian" column="qian" jdbcType="INTEGER" />
+    <result property="bai" column="bai" jdbcType="INTEGER" />
+    <result property="shi" column="shi" jdbcType="INTEGER" />
+    <result property="ge" column="ge" jdbcType="INTEGER" />
+    <result property="da" column="da" jdbcType="INTEGER" />
+    <result property="xiao" column="xiao" jdbcType="INTEGER" />
+    <result property="dan" column="dan" jdbcType="INTEGER" />
+    <result property="shuang" column="shuang" jdbcType="INTEGER" />
+    <result property="qishu" column="qishu" jdbcType="INTEGER" />
+</resultMap>
+
+    <sql id="BaseColumnList">
+        code,wan,qian,bai,shi,
+        ge,da,xiao,dan,shuang,
+        qishu
+    </sql>
+
+
+    <sql id="TableClause"> ${}.CAIPIAO </sql>
+
+
+    <select id="queryByCriteria" resultMap="BaseResultMap" parameterType="CriteriaQuery">
+        <include refid="public.Select4Query" />
+    </select>
+
+    <select id="countByCriteria" resultType="int" parameterType="CriteriaQuery">
+        <include refid="public.Count4Query" />
+    </select>
+
+    <delete id="deleteByCriteria" parameterType="CriteriaQuery">
+        <include refid="public.Delete4Query" />
+    </delete>
+</mapper>
